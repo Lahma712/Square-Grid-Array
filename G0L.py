@@ -19,10 +19,10 @@ def raster(Axis, a, b, size, HVp, CVH, P):
             C = C + 1
             Axis[b] += [C]
 
-    if A > 0:
-        C += P+1
+    
+    C += P+1
 
-    for _ in range(CVH - A):
+    for _ in range(CVH -1 -A):
         Axis[b] += [C]
         for _ in range(G-1):
             C = C + 1
