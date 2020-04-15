@@ -1,7 +1,9 @@
 from PIL import Image, ImageDraw
 width = int(input("screen width: "))
 height = int(input("screen height: "))
-Im = Image.new("RGB", (width, height))
+bgColor = eval(input("Background color: ( '(x, x, x)'): "))
+gColor = eval(input("Grid color : ( '(x, x, x)''): ") )
+Im = Image.new("RGB", (width, height), bgColor)
 draw = ImageDraw.Draw(Im)
 
 def raster(Axis, a, b, size, CellPixelPool, CellCount, CellWidth, gridWidth, ExcessPixels):
@@ -32,7 +34,7 @@ def raster(Axis, a, b, size, CellPixelPool, CellCount, CellWidth, gridWidth, Exc
 def Draw(Axis, a, b):
     for y in Axis[b]:
         for x in Axis[a]:
-            draw.point([x,y], (166,166,166))
+            draw.point([x,y], gColor)
 
 hCellCount = int(input("number of horizonal cells: "))
 gridWidth = int(input("grid width: ")) #thickness of grid
@@ -69,4 +71,4 @@ Draw(VGrid, 0, 1)
 print(HGrid)
 print(VGrid)
 Im.show()
-Im.save(r"G0L.png")
+Im.save(r"Grid.png")               
