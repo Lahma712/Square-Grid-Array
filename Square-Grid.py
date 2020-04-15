@@ -1,8 +1,8 @@
 from PIL import Image, ImageDraw
 width = int(input("screen width: "))
 height = int(input("screen height: "))
-bgColor = eval(input("Background color: ( '(x, x, x)'): "))
-gColor = eval(input("Grid color : ( '(x, x, x)''): ") )
+bgColor = eval(input("Background color: ( eg, '(0, 0, 0)'): "))
+gColor = eval(input("Grid color : (eg. '(255, 255, 255)'): ") )
 Im = Image.new("RGB", (width, height), bgColor)
 draw = ImageDraw.Draw(Im)
 
