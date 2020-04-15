@@ -5,7 +5,7 @@ create a 2D square cell grid. You can freely choose the resolution of the grid, 
 in width, the grid thickness aswell as the colors (background color and grid color). I visualized the grid with 
 <b>PIL</b>.
 
-This program is a small part of my current "Game of Life" project that I'm working on.
+This program is a small part of my "Game of Life" project that I'm currently working on.
 
 
 
