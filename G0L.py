@@ -22,7 +22,7 @@ def raster(Axis, a, b, size, HVp, CVH, P):
     
     C += P+1
 
-    for _ in range(CVH -1 -A):
+    for _ in range(CVH -A):
         Axis[b] += [C]
         for _ in range(G-1):
             C = C + 1
