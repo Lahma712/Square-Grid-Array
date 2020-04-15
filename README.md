@@ -8,4 +8,10 @@ in width, the grid thickness aswell as the colors (background color and grid col
 This program is a small part of my current "Game of Life" project that I'm working on.
 
 
+
+<b>Example grids: (rendered with program)</b>
+
+
 ![img](https://imgur.com/Fyk5FA4.png)
+
+![img](https://imgur.com/TMdw8Uu.png)
