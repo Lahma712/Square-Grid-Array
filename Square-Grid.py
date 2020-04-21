@@ -1,74 +1,58 @@
 from PIL import Image, ImageDraw
-width = int(input("screen width: "))
-height = int(input("screen height: "))
+import getpass
+host = getpass.getuser()
+Width = int(input("screen width: "))
+Height = int(input("screen height: "))
 bgColor = eval(input("Background color: ( eg, '(0, 0, 0)'): "))
-gColor = eval(input("Grid color : (eg. '(255, 255, 255)'): ") )
-Im = Image.new("RGB", (width, height), bgColor)
+gColor = eval(input("Grid color : (eg. '(255, 255, 255)'): "))
+Im = Image.new("RGB", (Width, Height), bgColor)
 draw = ImageDraw.Draw(Im)
 
-def raster(Axis, a, b, size, CellPixelPool, CellCount, CellWidth, gridWidth, ExcessPixels):
-    for i in range(size):
-        Axis[a] += [i]
-    C = -1 #counter for grid pixel position
-    for _ in range(gridWidth):
-        C = C + 1
-        Axis[b] += [C]
-        
-    for _ in range(ExcessPixels):
-        C += CellWidth + 2
-        Axis[b] += [C]
-        for _ in range(gridWidth-1):
-            C = C + 1
-            Axis[b] += [C]
 
-    
-    C += CellWidth+1
+def grid(Axis, CellCount, CellWidth, ExcessPixels):
+    check = False
+    C = 0  # counter for grid pixel position
+
+    if ExcessPixels > 0:
+        ExcessPixels -= 1
+        check = True
+
+    for _ in range(ExcessPixels):
+        C += CellWidth + 1
+        Axis += [C]
+
+
+    if ExcessPixels == 0 and check != True:
+        C += CellWidth - 1
+    else:
+        C += CellWidth
 
     for _ in range(CellCount - ExcessPixels):
-        Axis[b] += [C]
-        for _ in range(gridWidth-1):
-            C = C + 1
-            Axis[b] += [C]
-        C += CellWidth + 1
+        Axis += [C]
+        C += CellWidth
 
-def Draw(Axis, a, b):
-    for y in Axis[b]:
-        for x in Axis[a]:
-            draw.point([x,y], gColor)
 
-hCellCount = int(input("number of horizonal cells: "))
-gridWidth = int(input("grid width: ")) #thickness of grid
+def Draw(a, b):
+    for y in a:
+        for x in b:
+            draw.point([x, y], gColor)
+            
 
-hCellPixelPool = Im.size[0] - (hCellCount +1)*gridWidth #available pixels for cells (grid pixels are subtracted)
-print("hCellPixelPool: "+str(hCellPixelPool))
+hCellCount = int(input("How many columns?: "))
+hCellWidth = Width // hCellCount  # Pixel width per cell (horizontal pixels)
+hExcessPixels = Width % hCellCount
+vCellCount = Height // hCellWidth  # number of vertical cells
+vCellWidth = Height // vCellCount  # Pixel height per cell (vertical pixels)
+vExcessPixels = Height % vCellCount
 
-hCellWidth = hCellPixelPool//hCellCount #Pixel width per cell (horizontal pixels)
-print("hCellWidth: "+str(hCellWidth))
+HGrid = [0]
+VGrid = [0]
 
-hExcessPixels = hCellPixelPool % hCellCount
-print("hExcessPixels: " + str(hExcessPixels))
+grid(VGrid, hCellCount, hCellWidth, hExcessPixels)
+grid(HGrid, vCellCount, vCellWidth, vExcessPixels)
 
-vCellCount = Im.size[1]//hCellWidth # number of vertical cells
-print("vCellCount: "+str(vCellCount))
+Draw(HGrid, range(Width))
+Draw(range(Height), VGrid)
 
-vCellPixelPool = Im.size[1] - (vCellCount +1)*gridWidth #available pixels per cell (grid pixels are subtracted)
-print("vCellPixelPool: "+str(vCellPixelPool))
-
-vCellWidth = vCellPixelPool // vCellCount#Pixel height per cell (vertical pixels)
-print("vCellWidth: "+str(vCellWidth))
-
-vExcessPixels = vCellPixelPool % vCellCount
-print("vExcessPixels: "+ str(vExcessPixels))
-
-HGrid = [[], []]
-VGrid = [[], []]
-
-raster(VGrid, 1, 0, Im.size[1], hCellPixelPool, hCellCount, hCellWidth, gridWidth, hExcessPixels)
-raster(HGrid, 0, 1, Im.size[0], vCellPixelPool, vCellCount, vCellWidth, gridWidth, vExcessPixels )
-
-Draw(HGrid, 0, 1)
-Draw(VGrid, 0, 1)
-print(HGrid)
-print(VGrid)
 Im.show()
-Im.save(r"Grid.png")               
+Im.save(r"C:\Users\{}\Desktop\Grid.png".format(host))
